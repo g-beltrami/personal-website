@@ -2,47 +2,63 @@ import Image from 'next/image'
 
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
-import logoAnimaginary from '@/images/logos/animaginary.svg'
-import logoCosmos from '@/images/logos/cosmos.svg'
-import logoHelioStream from '@/images/logos/helio-stream.svg'
-import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
-import logoPlanetaria from '@/images/logos/planetaria.svg'
+import logoDex from '@/images/logos/dex.svg'
+import logoPatronos from '@/images/logos/patronos.svg'
+import logoKartel from '@/images/logos/kartel.jpg'
+import logoAws from '@/images/logos/aws.svg'
+import logoRappi from '@/images/logos/rappi.svg'
+import logoBeehive from '@/images/logos/beehive.svg'
+import logoMckinsey from '@/images/logos/mckinsey.svg'
 
 const projects = [
   {
-    name: 'Planetaria',
+    name: 'dex',
     description:
-      'Creating technology to empower civilians to explore space on their own terms.',
-    link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
-    logo: logoPlanetaria,
+      'A unified data platform that helps organizations turn scattered data into reliable insights. From ingestion to orchestration, governance to BI—fully managed in the cloud.',
+    link: { href: 'https://www.dexlabs.io/', label: 'dexlabs.io' },
+    logo: logoDex,
   },
   {
-    name: 'Animaginary',
+    name: 'Patronos Endowment Fund',
     description:
-      'High performance web animation library, hand-written in optimized WASM.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoAnimaginary,
+      'One of Brazil\'s first endowment funds supporting education and innovation at Unicamp. Funding top talent and projects tackling humanity\'s biggest challenges.',
+    link: { href: 'https://www.patronos.org/', label: 'patronos.org' },
+    logo: logoPatronos,
   },
   {
-    name: 'HelioStream',
+    name: 'Kartel Racing',
     description:
-      'Real-time video streaming library, optimized for interstellar transmission.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoHelioStream,
+      'Amateur go-karting team where I compete in endurance races. 2023 Brazilian National Champion in amateur endurance category.',
+    link: { href: 'https://www.instagram.com/kartelracingoficial/', label: 'instagram.com' },
+    logo: logoKartel,
   },
   {
-    name: 'cosmOS',
+    name: 'AWS Global Accelerator',
     description:
-      'The operating system that powers our Planetaria space shuttles.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoCosmos,
+      'Global network optimization service that improves performance for internet applications. Led growth strategy and adoption for SMB customers.',
+    link: { href: 'https://aws.amazon.com/global-accelerator/', label: 'aws.amazon.com' },
+    logo: logoAws,
   },
   {
-    name: 'OpenShuttle',
+    name: 'Rappi',
     description:
-      'The schematics for the first rocket I designed that successfully made it to orbit.',
-    link: { href: '#', label: 'github.com' },
-    logo: logoOpenShuttle,
+      'Latin America\'s super app for on-demand delivery. Led global product development for groceries, pharmacies, and liquor operations across 9 countries.',
+    link: { href: 'https://www.rappi.com.br/', label: 'rappi.com' },
+    logo: logoRappi,
+  },
+  {
+    name: 'McKinsey & Company',
+    description:
+      'Global management consulting firm. Advised Fortune 500 companies and governments on strategy, operations, and transformation across Brazil and Ghana.',
+    link: { href: 'https://www.mckinsey.com/', label: 'mckinsey.com' },
+    logo: logoMckinsey,
+  },
+  {
+    name: 'Beehive',
+    description:
+      'Enterprise-grade project management for transformations, turnarounds, and organizational change.',
+    link: { href: 'https://beehive.solutions/', label: 'beehive.solutions' },
+    logo: logoBeehive,
   },
 ]
 
@@ -59,14 +75,14 @@ function LinkIcon(props) {
 
 export const metadata = {
   title: 'Projects',
-  description: 'Things I’ve made trying to put my dent in the universe.',
+  description: 'Companies I\'ve built, products I\'ve led, and teams I\'ve been part of.',
 }
 
 export default function Projects() {
   return (
     <SimpleLayout
-      title="Things I’ve made trying to put my dent in the universe."
-      intro="I’ve worked on tons of little projects over the years but these are the ones that I’m most proud of. Many of them are open-source, so if you see something that piques your interest, check out the code and contribute if you have ideas for how it can be improved."
+      title="Companies I've built, products I've led, and teams I've been part of."
+      intro="From founding startups to leading product development at global tech companies, these are the organizations and projects that have shaped my career. Each one taught me something new about building products that matter."
     >
       <ul
         role="list"

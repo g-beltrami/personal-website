@@ -1,6 +1,9 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
+import { useState } from 'react'
 
 import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
@@ -22,7 +25,6 @@ import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
 import image4 from '@/images/photos/image-4.jpg'
 import image5 from '@/images/photos/image-5.jpg'
-import { getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 
 function MailIcon(props) {
@@ -84,20 +86,6 @@ function ArrowDownIcon(props) {
   )
 }
 
-function Article({ article }) {
-  return (
-    <Card as="article">
-      <Card.Title href={`/articles/${article.slug}`}>
-        {article.title}
-      </Card.Title>
-      <Card.Eyebrow as="time" dateTime={article.date} decorate>
-        {formatDate(article.date)}
-      </Card.Eyebrow>
-      <Card.Description>{article.description}</Card.Description>
-      <Card.Cta>Read article</Card.Cta>
-    </Card>
-  )
-}
 
 function SocialLink({ icon: Icon, ...props }) {
   return (
@@ -225,20 +213,24 @@ function Resume() {
   ]
 
   return (
-    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-      <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-        <BriefcaseIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Work</span>
+    <div className="rounded-2xl border border-zinc-100 p-8 shadow-sm dark:border-zinc-700/40 dark:bg-zinc-800/50">
+      <h2 className="flex text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-8">
+        <BriefcaseIcon className="h-7 w-7 flex-none text-zinc-600 dark:text-zinc-400" />
+        <span className="ml-3">Career Journey</span>
       </h2>
-      <ol className="mt-6 space-y-4">
+      <ol className="space-y-6">
         {resume.map((role, roleIndex) => (
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full">
-        Download CV
-        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
-      </Button>
+      <div className="mt-8 pt-6 border-t border-zinc-100 dark:border-zinc-700/40">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400 text-center">
+          Want to see more details? Check out my{' '}
+          <Link href="/projects" className="font-medium text-teal-600 hover:text-teal-500 dark:text-teal-400 dark:hover:text-teal-300 transition">
+            projects page
+          </Link>
+        </p>
+      </div>
     </div>
   )
 }
@@ -265,53 +257,99 @@ function Photos() {
   )
 }
 
-export default async function Home() {
-  let articles = (await getAllArticles()).slice(0, 4)
+export default function Home() {
+  const [showToast, setShowToast] = useState(false)
+
+  const copyBio = async () => {
+    const firstPersonBio = "I'm Gustavo Beltrami, a technical product leader and entrepreneur. I'm currently the Co-founder & CEO at dex, a unified data platform that helps organizations turn scattered data into reliable insights. My background spans designing race cars, management consulting at McKinsey, product management at Rappi and AWS, and an MBA from Harvard Business School. I also co-founded and lead Patronos Endowment Fund, supporting education and innovation at one of Brazil's top universities. I've built products used by millions across multiple continents, and in my free time, I race go-karts competitively, wakeboard, and hike.";
+
+    const thirdPersonBio = firstPersonBio
+      .replace("I'm Gustavo Beltrami", "Gustavo Beltrami is")
+      .replace("I'm currently", "He is currently")
+      .replace("My background", "His background")
+      .replace("I also co-founded and lead", "He also co-founded and leads")
+      .replace("I've built", "He has built")
+      .replace("in my free time, I race", "in his free time, he races");
+
+    try {
+      await navigator.clipboard.writeText(thirdPersonBio);
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+    } catch (err) {
+      console.error('Failed to copy bio:', err);
+    }
+  }
 
   return (
     <>
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-top-2 duration-300">
+          <div className="flex items-center gap-2 rounded-lg bg-teal-600 px-4 py-3 text-sm font-medium text-white shadow-lg">
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Bio copied to clipboard!
+          </div>
+        </div>
+      )}
+
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Software designer, founder, and amateur astronaut.
+            Builder. Founder. Learner.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Spencer, a software designer and entrepreneur based in New York
-            City. I’m the founder and CEO of Planetaria, where we develop
-            technologies that empower regular people to explore space on their
-            own terms.
+            I'm Gustavo Beltrami, a technical product leader and entrepreneur. I'm currently the Co-founder & CEO at dex, a unified data platform that helps organizations turn scattered data into reliable insights. My background spans designing race cars, management consulting at McKinsey, product management at Rappi and AWS, and an MBA from Harvard Business School. I also co-founded and lead Patronos Endowment Fund, supporting education and innovation at one of Brazil's top universities. I've built products used by millions across multiple continents, and in my free time, I race go-karts competitively, wakeboard, and hike.
           </p>
           <div className="mt-6 flex gap-6">
-            <SocialLink href="#" aria-label="Follow on X" icon={XIcon} />
+            <SocialLink href="https://www.linkedin.com/in/gustavo-beltrami/" aria-label="Follow on LinkedIn" icon={LinkedInIcon} />
             <SocialLink
-              href="#"
-              aria-label="Follow on Instagram"
-              icon={InstagramIcon}
-            />
-            <SocialLink
-              href="#"
+              href="https://github.com/gustavo-beltrami"
               aria-label="Follow on GitHub"
               icon={GitHubIcon}
             />
             <SocialLink
-              href="#"
-              aria-label="Follow on LinkedIn"
-              icon={LinkedInIcon}
+              href="https://www.instagram.com/gustavo_mbeltrami/"
+              aria-label="Follow on Instagram"
+              icon={InstagramIcon}
             />
+          </div>
+
+          <div className="mt-6 pt-6 border-t border-zinc-100 dark:border-zinc-700/40">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
+              For journalists, podcast hosts, and event organizers—here's a bio ready to copy and paste.
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={copyBio}
+                className="inline-flex items-center gap-2 rounded-md bg-zinc-50 px-3 py-2 text-sm font-medium text-zinc-900 ring-1 ring-inset ring-zinc-900/10 hover:bg-zinc-100 hover:text-zinc-900 dark:bg-zinc-800/50 dark:text-zinc-300 dark:ring-white/10 dark:hover:bg-zinc-800 dark:hover:text-white"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                </svg>
+                Copy Bio
+              </button>
+              <Button
+                variant="secondary"
+                href="/profile.jpg"
+                download="gustavo-beltrami-headshot.jpg"
+                className="text-sm inline-flex items-center gap-2"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-4.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+                Download Headshot
+              </Button>
+            </div>
           </div>
         </div>
       </Container>
       <Photos />
       <Container className="mt-24 md:mt-28">
-        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          <div className="flex flex-col gap-16">
-            {articles.map((article) => (
-              <Article key={article.slug} article={article} />
-            ))}
-          </div>
-          <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <Resume />
-          </div>
+        <div className="mx-auto max-w-2xl lg:max-w-5xl">
+          <Resume />
         </div>
       </Container>
     </>
