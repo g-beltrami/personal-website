@@ -113,7 +113,7 @@ function MobileNavigation(props) {
         </div>
         <nav className="mt-6">
           <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-            <MobileNavItem href="/">Home</MobileNavItem>
+            <MobileNavItem href="/home">Home</MobileNavItem>
             <MobileNavItem href="/about">About</MobileNavItem>
             <MobileNavItem href="/projects">Projects</MobileNavItem>
           </ul>
@@ -150,7 +150,7 @@ function DesktopNavigation(props) {
   return (
     <nav {...props}>
       <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg ring-1 shadow-zinc-800/5 ring-zinc-900/5 backdrop-blur-sm dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/">Home</NavItem>
+        <NavItem href="/home">Home</NavItem>
         <NavItem href="/about">About</NavItem>
         <NavItem href="/projects">Projects</NavItem>
       </ul>
@@ -201,7 +201,7 @@ function AvatarContainer({ className, ...props }) {
 function Avatar({ large = false, className, ...props }) {
   return (
     <Link
-      href="/"
+      href="/home"
       aria-label="Home"
       className={clsx(className, 'pointer-events-auto')}
       {...props}
@@ -221,7 +221,9 @@ function Avatar({ large = false, className, ...props }) {
 }
 
 export function Header() {
-  let isHomePage = usePathname() === '/'
+  let pathname = usePathname()
+  let isHomePage = pathname === '/home'
+  let shouldShowAvatar = isHomePage
 
   let headerRef = useRef(null)
   let avatarRef = useRef(null)
@@ -336,7 +338,7 @@ export function Header() {
           marginBottom: 'var(--header-mb)',
         }}
       >
-        {isHomePage && (
+        {shouldShowAvatar && (
           <>
             <div
               ref={avatarRef}
@@ -387,11 +389,7 @@ export function Header() {
           >
             <div className="relative flex gap-4">
               <div className="flex flex-1">
-                {!isHomePage && (
-                  <AvatarContainer>
-                    <Avatar />
-                  </AvatarContainer>
-                )}
+                {/* Avatar removed from all pages */}
               </div>
               <div className="flex flex-1 justify-end md:justify-center">
                 <MobileNavigation className="pointer-events-auto md:hidden" />
@@ -406,7 +404,7 @@ export function Header() {
           </Container>
         </div>
       </header>
-      {isHomePage && (
+      {shouldShowAvatar && (
         <div
           className="flex-none"
           style={{ height: 'var(--content-offset)' }}
