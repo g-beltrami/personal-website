@@ -100,4 +100,47 @@ Building a personal website to showcase projects, skills, and professional prese
 - [ ] Consider adding a contact form or calendar booking integration
 
 ---
-*Last updated: 2025-09-29*
+
+### 2025-10-10 - Command Palette Mobile Support & Brand Consistency
+
+#### Mobile-Responsive Command Palette Implementation
+- **Context**: The command palette (Cmd+K) was desktop-only, creating a poor mobile UX where users couldn't access quick navigation features
+- **Implementation**:
+  - Created `CommandPaletteContext` for global state management of palette open/close state
+  - Enhanced `KeyboardHint` component with mobile detection logic (`isMobile` check based on `window.innerWidth`)
+  - Added tap interaction handler for mobile devices - users can now tap the hint to open the command palette
+  - Desktop maintains keyboard-only interaction (Cmd+K), while mobile adds touch support
+  - Properly handles cleanup of mobile detection event listeners
+- **Files Modified**:
+  - `/Users/G.Beltrami/Documents/Projects/7.personal-website/src/components/CommandPaletteContext.jsx` (new)
+  - `/Users/G.Beltrami/Documents/Projects/7.personal-website/src/components/KeyboardHint.jsx`
+  - `/Users/G.Beltrami/Documents/Projects/7.personal-website/src/components/CommandPalette.jsx`
+  - `/Users/G.Beltrami/Documents/Projects/7.personal-website/src/app/layout.jsx`
+- **Commit**: `54fe4aa` - "Add mobile support for command palette with tap interaction"
+
+#### About Page Title Update
+- **Context**: The About page had a different headline style ("I'm Gustavo Beltrami. I love building things that matter.") compared to the homepage's concise branding ("Builder. Founder. Learner.")
+- **Decision**: Updated About page title to "Builder, founder, learner. Still chasing hard problems." for brand consistency across the site
+- **Rationale**: Creates a cohesive personal brand voice that's more concise and action-oriented
+- **Files Modified**:
+  - `/Users/G.Beltrami/Documents/Projects/7.personal-website/src/app/about/page.jsx`
+- **Commit**: `88af1f2` - "Update About page title to match homepage branding"
+
+#### Deployment Status
+- **Pushed to Production**: Both commits pushed to `main` branch on GitHub
+- **Vercel Deployment**: Automatic deployment triggered via GitHub integration
+- **Live Status**: Changes should be live at production URL within minutes
+
+#### Technical Patterns Established
+- **Mobile Detection Pattern**: Using `window.innerWidth < 768` as breakpoint for mobile detection
+- **Context API Usage**: Leveraging React Context for cross-component state management (command palette)
+- **Event Listener Cleanup**: Proper cleanup in `useEffect` return functions for resize listeners
+- **Brand Consistency**: Matching headline styles across pages for cohesive messaging
+
+#### Next Session Priorities
+- Monitor Vercel deployment completion
+- Test mobile command palette functionality on actual mobile devices
+- Consider adding analytics to track command palette usage (desktop vs mobile)
+
+---
+*Last updated: 2025-10-10*
