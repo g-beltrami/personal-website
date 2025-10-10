@@ -1,24 +1,25 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { CommandPalette } from '@/components/CommandPalette'
+import { CommandPaletteProvider, useCommandPalette } from '@/contexts/CommandPaletteContext'
 
-export function Layout({ children }) {
-  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false)
+function LayoutContent({ children }) {
+  const { isOpen, openCommandPalette, closeCommandPalette } = useCommandPalette()
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
-        setIsCommandPaletteOpen(true)
+        openCommandPalette()
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [openCommandPalette])
 
   return (
     <>
@@ -34,9 +35,17 @@ export function Layout({ children }) {
       </div>
 
       <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
+        isOpen={isOpen}
+        onClose={closeCommandPalette}
       />
     </>
+  )
+}
+
+export function Layout({ children }) {
+  return (
+    <CommandPaletteProvider>
+      <LayoutContent>{children}</LayoutContent>
+    </CommandPaletteProvider>
   )
 }
