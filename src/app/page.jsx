@@ -14,7 +14,7 @@ function Landing() {
         </p>
 
         <p className="text-base sm:text-lg text-zinc-500 dark:text-zinc-400 mb-12 max-w-lg">
-          Trying to build and learn
+          Living and building
         </p>
 
         <KeyboardHint />
