@@ -143,4 +143,119 @@ Building a personal website to showcase projects, skills, and professional prese
 - Consider adding analytics to track command palette usage (desktop vs mobile)
 
 ---
+
+### 2025-10-10 (Later Session) - Command Palette UX Refinements
+
+#### Session Summary
+Enhanced the command palette with critical UX improvements focused on keyboard interaction and user flow optimization.
+
+#### Key Improvements Implemented
+
+**1. Auto-Focus Input Field**
+- **Problem**: After opening the command palette with Cmd+K, users had to manually click into the input field before typing
+- **Solution**: Added `useRef` hook and `useEffect` to automatically focus the input field when the palette opens
+- **Implementation**: Used 100ms timeout to ensure dialog transition completes before focusing
+- **Impact**: Seamless keyboard-first workflow - users can immediately start typing after Cmd+K
+
+**2. Removed Blue Outline**
+- **Problem**: Browser's default blue outline appeared when input field was focused, creating visual inconsistency with the dark mode design
+- **Solution**: Added `focus:outline-none` to the input field className
+- **Design Rationale**: The input field is the only interactive element and is already visually distinct, so the outline was redundant
+
+**3. Fixed Premature Dialog Closing**
+- **Problem**: The command palette would close unexpectedly when users deleted text with Backspace or when the input was cleared
+- **Root Cause**: Headless UI Combobox was treating empty/null selections as commands and closing the dialog
+- **Solutions Implemented**:
+  - Added `nullable` prop to Combobox component to allow null selections without triggering onChange
+  - Added guard in `handleCommand` to prevent closing when no command is selected
+  - Used `displayValue` prop for better control of input value display
+  - Added keyboard event handler to prevent default closing behavior on Backspace/Delete keys
+- **Impact**: Users can now freely delete text and clear the input without the dialog unexpectedly closing
+
+#### Technical Details
+
+**Files Modified**:
+- `/Users/G.Beltrami/Documents/Projects/7.personal-website/src/components/CommandPalette.jsx`
+
+**Code Changes**:
+```javascript
+// Added useRef for input focus management
+const inputRef = useRef(null)
+
+// Auto-focus logic in useEffect
+useEffect(() => {
+  if (!isOpen) {
+    setQuery('')
+  } else {
+    setTimeout(() => {
+      inputRef.current?.focus()
+    }, 100)
+  }
+}, [isOpen])
+
+// Guard to prevent closing on null/empty selection
+const handleCommand = (command) => {
+  if (!command) return
+  // ... rest of handler
+}
+
+// Enhanced Combobox configuration
+<Combobox onChange={handleCommand} nullable>
+  <Combobox.Input
+    ref={inputRef}
+    className="... focus:outline-none ..."
+    displayValue={() => query}
+    onKeyDown={(event) => {
+      if (event.key === 'Backspace' || event.key === 'Delete') {
+        event.stopPropagation()
+      }
+    }}
+  />
+</Combobox>
+```
+
+**Commit**: `94b1fd6` - "feat: Enhance command palette UX with auto-focus and improved keyboard handling"
+
+#### Homepage Tagline Update
+- **Change**: Updated homepage tagline from "Trying to build and learn" to "Living and building"
+- **Rationale**: More confident and action-oriented messaging that better reflects professional positioning
+- **Commit**: `e32f8b8` - "Update homepage tagline to 'Living and building'"
+
+#### Design Patterns & Protocols Established
+
+**1. Keyboard-First UX Pattern**
+- When implementing modal/dialog components with input fields, always auto-focus the primary input on open
+- Use refs and delayed focus (with timeout) to account for transition animations
+- Prevent default browser behaviors that interfere with keyboard workflows
+
+**2. Headless UI Combobox Pattern**
+- Use `nullable` prop when you want to allow empty selections without triggering onChange
+- Implement guards in onChange handlers to validate selection before taking action
+- Use `displayValue` prop for explicit control over input display value
+- Add keyboard event handlers to prevent unwanted propagation of delete/backspace events
+
+**3. Focus State Styling**
+- Remove default outlines (`focus:outline-none`) when the focused element is already visually distinct
+- Ensure keyboard accessibility is maintained through other visual cues
+
+#### Deployment Status
+- **Committed**: Command palette improvements committed to local repo
+- **Pushed to GitHub**: Successfully pushed to `origin/main`
+- **Vercel Deployment**: Automatic deployment triggered
+- **Production Status**: Changes deploying to production URL
+
+#### User Experience Impact
+These changes significantly improve the command palette's usability by:
+1. Eliminating friction in the keyboard workflow (no need to click)
+2. Providing more predictable and stable interaction behavior
+3. Creating a more polished, professional feel consistent with dark mode design
+4. Matching expected behavior from similar command palettes in tools like VS Code, Raycast, etc.
+
+#### Testing Recommendations
+- Test auto-focus behavior on different browsers (Chrome, Firefox, Safari)
+- Verify keyboard navigation works correctly with arrow keys, Enter, Escape
+- Test on mobile devices to ensure tap interactions still work properly
+- Verify the command palette integrates well with the existing mobile tap support added earlier
+
+---
 *Last updated: 2025-10-10*
