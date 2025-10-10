@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Combobox, Dialog, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -59,6 +59,7 @@ const commands = [
 export function CommandPalette({ isOpen, onClose }) {
   const [query, setQuery] = useState('')
   const router = useRouter()
+  const inputRef = useRef(null)
 
   const filteredCommands =
     query === ''
@@ -83,6 +84,9 @@ export function CommandPalette({ isOpen, onClose }) {
         })
 
   const handleCommand = (command) => {
+    // Don't close if no command was selected (e.g., when input is cleared)
+    if (!command) return
+
     onClose()
     setQuery('')
 
@@ -102,6 +106,11 @@ export function CommandPalette({ isOpen, onClose }) {
   useEffect(() => {
     if (!isOpen) {
       setQuery('')
+    } else {
+      // Focus input when dialog opens
+      setTimeout(() => {
+        inputRef.current?.focus()
+      }, 100)
     }
   }, [isOpen])
 
@@ -135,12 +144,20 @@ export function CommandPalette({ isOpen, onClose }) {
             leaveTo="opacity-0 scale-95"
           >
             <Dialog.Panel className="mx-auto max-w-2xl transform overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black/5 transition-all dark:bg-zinc-900 dark:ring-white/10">
-              <Combobox onChange={handleCommand}>
+              <Combobox onChange={handleCommand} nullable>
                 <div className="relative">
                   <Combobox.Input
-                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-zinc-900 placeholder:text-zinc-500 focus:ring-0 sm:text-sm dark:text-zinc-100 dark:placeholder:text-zinc-400"
+                    ref={inputRef}
+                    className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-zinc-900 placeholder:text-zinc-500 focus:outline-none focus:ring-0 sm:text-sm dark:text-zinc-100 dark:placeholder:text-zinc-400"
                     placeholder="Type a command or search..."
+                    displayValue={() => query}
                     onChange={(event) => setQuery(event.target.value)}
+                    onKeyDown={(event) => {
+                      // Prevent any default closing behavior
+                      if (event.key === 'Backspace' || event.key === 'Delete') {
+                        event.stopPropagation()
+                      }
+                    }}
                   />
                   <svg
                     className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-zinc-500 dark:text-zinc-400"
