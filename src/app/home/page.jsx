@@ -261,7 +261,7 @@ export default function Home() {
   const [showToast, setShowToast] = useState(false)
 
   const copyBio = async () => {
-    const firstPersonBio = "I'm Gustavo Beltrami, a technical product leader and entrepreneur. I'm currently the Co-founder & CEO at dex, a unified data platform that helps organizations turn scattered data into reliable insights. My background spans designing race cars, management consulting at McKinsey, product management at Rappi and AWS, and an MBA from Harvard Business School. I also co-founded and lead Patronos Endowment Fund, supporting education and innovation at one of Brazil's top universities. I've built products used by millions across multiple continents, and in my free time, I race go-karts competitively, wakeboard, and hike.";
+    const firstPersonBio = "I'm Gustavo Beltrami, a technical product leader and entrepreneur. I'm currently the Founding CEO at dex, a unified data platform that helps organizations turn scattered data into reliable insights. My background spans designing race cars, management consulting at McKinsey, product management at Rappi and AWS, and an MBA from Harvard Business School. I also co-founded and lead Patronos Endowment Fund, supporting education and innovation at one of Brazil's top universities. I've built products used by millions across multiple continents, and in my free time, I race go-karts competitively, wakeboard, and hike.";
 
     const thirdPersonBio = firstPersonBio
       .replace("I'm Gustavo Beltrami", "Gustavo Beltrami is")
@@ -296,11 +296,8 @@ export default function Home() {
 
       <Container className="mt-9">
         <div className="max-w-2xl">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Building...
-          </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I'm Gustavo Beltrami, a technical product leader and entrepreneur. I'm currently the Co-founder & CEO at dex, a unified data platform that helps organizations turn scattered data into reliable insights. My background spans designing race cars, management consulting at McKinsey, product management at Rappi and AWS, and an MBA from Harvard Business School. I also co-founded and lead Patronos Endowment Fund, supporting education and innovation at one of Brazil's top universities. I've built products used by millions across multiple continents, and in my free time, I race go-karts competitively, wakeboard, and hike.
+            I'm Gustavo Beltrami, a technical product leader and entrepreneur. I'm currently the Founding CEO at dex, a unified data platform that helps organizations turn scattered data into reliable insights. My background spans designing race cars, management consulting at McKinsey, product management at Rappi and AWS, and an MBA from Harvard Business School. I also co-founded and lead Patronos Endowment Fund, supporting education and innovation at one of Brazil's top universities. I've built products used by millions across multiple continents, and in my free time, I race go-karts competitively, wakeboard, and hike.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink href="https://www.linkedin.com/in/gustavo-beltrami/" aria-label="Follow on LinkedIn" icon={LinkedInIcon} />
@@ -322,20 +319,19 @@ export default function Home() {
             </p>
 
             <div className="flex gap-3">
-              <button
+              <Button
+                variant="secondary"
                 onClick={copyBio}
-                className="inline-flex items-center gap-2 rounded-md bg-zinc-50 px-3 py-2 text-sm font-medium text-zinc-900 ring-1 ring-inset ring-zinc-900/10 hover:bg-zinc-100 hover:text-zinc-900 dark:bg-zinc-800/50 dark:text-zinc-300 dark:ring-white/10 dark:hover:bg-zinc-800 dark:hover:text-white"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
                 </svg>
                 Copy Bio
-              </button>
+              </Button>
               <Button
                 variant="secondary"
-                href="/profile.jpg"
-                download="gustavo-beltrami-headshot.jpg"
-                className="text-sm inline-flex items-center gap-2"
+                href="/Profile_Pic.png"
+                download="gustavo-beltrami-headshot.png"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-4.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />

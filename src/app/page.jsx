@@ -9,12 +9,8 @@ function Landing() {
           Gustavo Beltrami
         </h1>
 
-        <p className="text-lg sm:text-xl md:text-2xl text-zinc-600 dark:text-zinc-300 mb-4">
-          Co-founder & CEO at dex
-        </p>
-
-        <p className="text-base sm:text-lg text-zinc-500 dark:text-zinc-400 mb-12 max-w-lg">
-          Living and building
+        <p className="text-lg sm:text-xl md:text-2xl text-zinc-600 dark:text-zinc-300 mb-12">
+          Founding CEO at dex
         </p>
 
         <KeyboardHint />
@@ -27,5 +23,5 @@ export default Landing
 
 export const metadata = {
   title: 'Gustavo Beltrami',
-  description: 'Co-founder & CEO at dex. Building tools that turn scattered data into reliable insights.',
+  description: 'Founding CEO at dex. Building tools that turn scattered data into reliable insights.',
 }
